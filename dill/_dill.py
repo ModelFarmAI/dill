@@ -1338,7 +1338,10 @@ def _save_file(pickler, obj, open_):
         if obj in (sys.__stdout__, sys.__stderr__, sys.__stdin__):
             position = -1
         else:
-            position = obj.tell()
+            try:
+                position = obj.tell()
+            except:
+                position = -1
     if is_dill(pickler, child=True) and pickler._fmode == FILE_FMODE:
         f = open_(obj.name, "r")
         fdata = f.read()
